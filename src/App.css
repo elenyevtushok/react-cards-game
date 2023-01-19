@@ -1,5 +1,7 @@
 body{
 	background-color: green;
+	color: white;
+	font-size: 20px;
 }
 .App{
 	display: flex;
@@ -14,7 +16,7 @@ button{
 	cursor: pointer;
 	border: none;
 	border-radius: 5px;
-	font-size: 16px;
+	font-size: 20px;
 }
 img.card{
 	width: 100%;
@@ -23,8 +25,8 @@ img.card{
 div.card-slot {
 	border: 1px solid black;
 	border-radius: 5px;
-	height: 300px;
-	width: calc(300px * 5 / 7);
+	height: 200px;
+	width: calc(200px * 5 / 7);
 }
 
 div.card-slot:nth-of-type(1) {

@@ -4,10 +4,18 @@ import './App.css'
 
 function App() {
 	const [deckId, setDeckId] = useState();
-	const [twoCards, setTwoCards] = useState({
-		firstCard: "",
-		secondCard: ""
-	});
+	const [twoCards, setTwoCards] = useState([
+		{
+			name: "computerCard",
+			image: "",
+			value: ""
+		},
+		{
+			name: "myCard",
+			image: "",
+			value: ""
+		},
+	]);
 	const [computerScore, setComputerScore] = useState(0);
 	const [myScore, setMyScore] = useState(0);
 
@@ -21,20 +29,50 @@ function App() {
 				setDeckId(res.data.deck_id)
 				console.log(deckId)
 				console.log("new call made")
+				
 			})
 	}
 
 	function getTwoCards() {
 		axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
 			.then(res => {
-				setTwoCards({
-					firstCard: res.data.cards[0].image,
-					secondCard: res.data.cards[1].image
-				})
+				setTwoCards([
+					{
+						name: "computerCard",
+						image: res.data.cards[0].image,
+						value: res.data.cards[0].value
+					},
+					{
+						name: "myCard",
+						image: res.data.cards[1].image,
+						value: res.data.cards[1].value
+					}
+				])
 				console.log(res.data)
 				console.log(twoCards)
 				console.log(deckId)
+
 			})
+	}
+
+	let cardsArray = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING", "ACE"]
+
+	function findBiggest() {
+		let index1;
+		let index2;
+		for (let i = 0; i < cardsArray.length; i++) {
+			if (twoCards[0].value === cardsArray[i]) {
+				index1 = i;
+			}
+			if (twoCards[1].value === cardsArray[i]) {
+				index2 = i;
+			}
+		}
+		if (index1 > index2) {
+			setComputerScore((prevComputerScore) => prevComputerScore+1)
+		} if (index1 < index2) {
+			setMyScore((prevMyScore) => prevMyScore + 1)
+		}
 	}
 
 	return (
@@ -43,14 +81,18 @@ function App() {
 			<div className="cards">
 				<p>Computer score:{computerScore}</p>
 				<div className="card-slot">
-					{twoCards.firstCard&&<img className='card' src={twoCards.firstCard} />}
+					{twoCards[0].image && <img className='card' src={twoCards[0].image} />}
 				</div>
 				<div className="card-slot">
-					{twoCards.secondCard &&<img className='card' src={twoCards.secondCard} />}
+					{twoCards[1].image && <img className='card' src={twoCards[1].image} />}
 				</div>
 				<p>My score:{myScore}</p>
 			</div>
-			<button onClick={getTwoCards}>Draw</button>
+			<button onClick={() => {
+				findBiggest();
+				getTwoCards()
+				}
+			}>Draw</button>
 		</div>
 	)
 }
