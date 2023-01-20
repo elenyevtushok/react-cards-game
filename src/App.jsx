@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import './App.css'
+import Confetti from 'react-confetti';
 
 function App() {
 	const [deckId, setDeckId] = useState();
@@ -19,6 +20,7 @@ function App() {
 	const [remainingCards, setRemainingCards] = useState();
 	const [computerScore, setComputerScore] = useState(0);
 	const [myScore, setMyScore] = useState(0);
+	const [winner, setWinner] = useState()
 
 	useEffect(() => {
 		getNewDeck();
@@ -31,6 +33,9 @@ function App() {
 				console.log(deckId)
 				console.log("new call made")
 				setRemainingCards(res.data.remaining)
+				setComputerScore(0)
+				setMyScore(0)
+				setWinner("")
 			})
 	}
 
@@ -57,6 +62,17 @@ function App() {
 			})
 	}
 
+	function endGame() {
+		if (myScore > computerScore) {
+			setWinner("Congratulations, you won!")
+		}
+		if (myScore < computerScore) {
+			setWinner("Computer won 💻")
+		}
+		if (myScore = computerScore){
+		setWinner("It's a tie!")}
+	}
+
 	let cardsArray = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING", "ACE"]
 
 	function findBiggest() {
@@ -71,7 +87,7 @@ function App() {
 			}
 		}
 		if (index1 > index2) {
-			setComputerScore((prevComputerScore) => prevComputerScore+1)
+			setComputerScore((prevComputerScore) => prevComputerScore + 1)
 		} if (index1 < index2) {
 			setMyScore((prevMyScore) => prevMyScore + 1)
 		}
@@ -80,7 +96,7 @@ function App() {
 	return (
 		<div className='App'>
 			<button onClick={getNewDeck}>New Deck, Please!</button>
-			<h2>Remaining cards: {remainingCards}</h2>
+			{winner ? winner && <h2>{winner}</h2> : <h2>Remaining cards: {remainingCards}</h2>}
 			<div className="cards">
 				<p>Computer score: {computerScore}</p>
 				<div className="card-slot">
@@ -91,11 +107,12 @@ function App() {
 				</div>
 				<p>My score: {myScore}</p>
 			</div>
-			<button onClick={() => {
-				findBiggest();
-				getTwoCards()
+			{remainingCards === 0 ? <button onClick={endGame}>EndGame</button> :
+				<button onClick={() => {
+					findBiggest();
+					getTwoCards()
 				}
-			}>Draw</button>
+				}>Draw</button>}
 		</div>
 	)
 }
