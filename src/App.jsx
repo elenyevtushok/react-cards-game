@@ -16,6 +16,7 @@ function App() {
 			value: ""
 		},
 	]);
+	const [remainingCards, setRemainingCards] = useState();
 	const [computerScore, setComputerScore] = useState(0);
 	const [myScore, setMyScore] = useState(0);
 
@@ -29,7 +30,7 @@ function App() {
 				setDeckId(res.data.deck_id)
 				console.log(deckId)
 				console.log("new call made")
-				
+				setRemainingCards(res.data.remaining)
 			})
 	}
 
@@ -51,7 +52,8 @@ function App() {
 				console.log(res.data)
 				console.log(twoCards)
 				console.log(deckId)
-
+				console.log("new call 2 made")
+				setRemainingCards(res.data.remaining)
 			})
 	}
 
@@ -78,15 +80,16 @@ function App() {
 	return (
 		<div className='App'>
 			<button onClick={getNewDeck}>New Deck, Please!</button>
+			<h2>Remaining cards: {remainingCards}</h2>
 			<div className="cards">
-				<p>Computer score:{computerScore}</p>
+				<p>Computer score: {computerScore}</p>
 				<div className="card-slot">
 					{twoCards[0].image && <img className='card' src={twoCards[0].image} />}
 				</div>
 				<div className="card-slot">
 					{twoCards[1].image && <img className='card' src={twoCards[1].image} />}
 				</div>
-				<p>My score:{myScore}</p>
+				<p>My score: {myScore}</p>
 			</div>
 			<button onClick={() => {
 				findBiggest();
