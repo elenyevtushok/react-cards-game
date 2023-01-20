@@ -107,6 +107,7 @@ function App() {
 					getTwoCards()
 				}
 				}>Draw</button>}
+			<p>Open-sourced code on <a href='https://github.com/elenyevtushok/react-cards-game'>GitHub</a></p>
 		</div>
 	)
 }
