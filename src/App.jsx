@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 import './App.css'
-import Confetti from 'react-confetti';
 
 function App() {
 	const [deckId, setDeckId] = useState();
@@ -20,7 +19,7 @@ function App() {
 	const [remainingCards, setRemainingCards] = useState();
 	const [computerScore, setComputerScore] = useState(0);
 	const [myScore, setMyScore] = useState(0);
-	const [winner, setWinner] = useState()
+	const [winner, setWinner] = useState("")
 
 	useEffect(() => {
 		getNewDeck();
@@ -30,8 +29,6 @@ function App() {
 		axios.get("https://deckofcardsapi.com/api/deck/new/shuffle/")
 			.then(res => {
 				setDeckId(res.data.deck_id)
-				console.log(deckId)
-				console.log("new call made")
 				setRemainingCards(res.data.remaining)
 				setComputerScore(0)
 				setMyScore(0)
@@ -54,10 +51,6 @@ function App() {
 						value: res.data.cards[1].value
 					}
 				])
-				console.log(res.data)
-				console.log(twoCards)
-				console.log(deckId)
-				console.log("new call 2 made")
 				setRemainingCards(res.data.remaining)
 			})
 	}
@@ -67,10 +60,11 @@ function App() {
 			setWinner("Congratulations, you won!")
 		}
 		if (myScore < computerScore) {
-			setWinner("Computer won 💻")
+			setWinner("Computer won")
 		}
-		if (myScore = computerScore){
-		setWinner("It's a tie!")}
+		if (myScore === computerScore) {
+			setWinner("It's a tie!")
+		}
 	}
 
 	let cardsArray = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING", "ACE"]
@@ -95,8 +89,8 @@ function App() {
 
 	return (
 		<div className='App'>
-			<button onClick={getNewDeck}>New Deck, Please!</button>
-			{winner ? winner && <h2>{winner}</h2> : <h2>Remaining cards: {remainingCards}</h2>}
+			<button onClick={getNewDeck}>New Game</button>
+			{winner ? winner && <h2 className='shimmer'>{winner}</h2> : <h2>Remaining cards: {remainingCards}</h2>}
 			<div className="cards">
 				<p>Computer score: {computerScore}</p>
 				<div className="card-slot">
@@ -107,7 +101,7 @@ function App() {
 				</div>
 				<p>My score: {myScore}</p>
 			</div>
-			{remainingCards === 0 ? <button onClick={endGame}>EndGame</button> :
+			{remainingCards === 0 ? <button onClick={endGame}>End Game</button> :
 				<button onClick={() => {
 					findBiggest();
 					getTwoCards()

@@ -2,11 +2,13 @@ body{
 	background-color: green;
 	color: white;
 	font-size: 20px;
+	font-family: "Oxygen";
 }
 .App{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	text-align: center;
 	margin: 20px;
 }
 button{
@@ -17,6 +19,7 @@ button{
 	border: none;
 	border-radius: 5px;
 	font-size: 20px;
+	font-family: "Oxygen";
 }
 img.card{
 	width: 100%;
@@ -31,4 +34,76 @@ div.card-slot {
 
 div.card-slot:nth-of-type(1) {
 	margin-bottom: 30px;
+}
+.shimmer {
+	font-family: "Oxygen";
+	text-align: center;
+	font-weight: 700;
+	font-size: 30px;
+	margin-bottom: 0;
+}
+
+.shimmer {
+	color: rgba(255, 255, 255, 0);
+	background: -webkit-gradient(linear, left top, right top, from(rgb(255, 255, 88)), to(rgb(170, 222, 102)), color-stop(0.5, #fff));
+	background: -moz-gradient(linear, left top, right top, from(#f2f559), to(rgb(65, 255, 27)), color-stop(0.5, #fff));
+	background: gradient(linear, left top, right top, from(rgb(251, 245, 64)), to(#222), color-stop(0.5, #fff));
+	-webkit-background-size: 125px 100%;
+	-moz-background-size: 125px 100%;
+	background-size: 125px 100%;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-animation-name: shimmer;
+	-moz-animation-name: shimmer;
+	animation-name: shimmer;
+	-webkit-animation-duration: 2s;
+	-moz-animation-duration: 2s;
+	animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+	-moz-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-color: rgb(255, 255, 255);
+}
+
+@-moz-keyframes shimmer {
+	0% {
+		background-position: top left;
+	}
+
+	100% {
+		background-position: top right;
+	}
+}
+
+@-webkit-keyframes shimmer {
+	0% {
+		background-position: top left;
+	}
+
+	100% {
+		background-position: top right;
+	}
+}
+
+@-o-keyframes shimmer {
+	0% {
+		background-position: top left;
+	}
+
+	100% {
+		background-position: top right;
+	}
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: top left;
+	}
+
+	100% {
+		background-position: top right;
+	}
 }
